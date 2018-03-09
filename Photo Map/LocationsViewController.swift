@@ -8,16 +8,24 @@
 
 import UIKit
 
-class LocationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+protocol LocationsViewControllerDelegate : class {
+    func locationsPickedLocation(controller: LocationsViewController, latitude: NSNumber, longitude: NSNumber)
+}
 
+class LocationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+    
+    // Set the delegate
+    weak var delegate: LocationsViewControllerDelegate?
+    
     // TODO: Fill in actual CLIENT_ID and CLIENT_SECRET
-    let CLIENT_ID = "CLIENT_ID GOES HERE"
-    let CLIENT_SECRET = "CLIENT_SECRET GOES HERE"
+    let CLIENT_ID = "QA1L0Z0ZNA2QVEEDHFPQWK0I5F1DE3GPLSNW4BZEBGJXUCFL"
+    let CLIENT_SECRET = "W2AOE1TYC4MHK5SZYOUGX0J3LVRALMPB4CXT3ZH21ZCPUMCU"
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
 
     var results: NSArray = []
+    var selectImage: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,9 +61,17 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
 
         let latString = "\(lat)"
         let lngString = "\(lng)"
-
+        
+        
+        //tableView.deselectRow(at: indexPath, animated: true)
+        //self.performSegue(withIdentifier: <#T##String#>, sender: self)
+        
         print(latString + " " + lngString)
+        
+        
     }
+    
+    
     
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = NSString(string: searchBar.text!).replacingCharacters(in: range, with: text)
@@ -97,3 +113,5 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     }
 
 }
+
+
